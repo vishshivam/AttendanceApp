@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="btnDatePicker" type="id" />
+    <item name="textViewStudentName" type="id" />
+    <item name="textViewStudentId" type="id" />
+    <item name="textViewStudentNumber" type="id" />
+    <item name="textViewReportNumber" type="id" />
+    <item name="textViewReportStudentName" type="id" />
+    <item name="textViewReportPercentage" type="id" />
+</resources>
