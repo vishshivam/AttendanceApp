@@ -3,6 +3,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +48,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
         Student student = students.get(position);
         holder.textViewStudentName.setText(student.getName());
-        holder.textViewStudentId.setText(String.valueOf(student.getId()));
+        holder.textViewStudentId.setText("Student Id: "+String.valueOf(student.getId()));
         holder.checkBoxAttendance.setChecked(student.isPresent());
+
+        // Set the serial number
+        holder.textViewStudentNumber.setText(String.valueOf(position + 1) + ". ");
+
 
         holder.checkBoxAttendance.setOnCheckedChangeListener((buttonView, isChecked) -> {
             student.setPresent(isChecked);
@@ -61,6 +66,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                 dbHelper.removeStudent(student.getId());
                 students.remove(position);
                 notifyItemRemoved(position);
+                notifyDataSetChanged();
                 Toast.makeText(context, "Student deleted.", Toast.LENGTH_SHORT).show();
             });
             builder.setNegativeButton("No", null);
@@ -69,8 +75,9 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         });
 
         holder.itemView.setOnClickListener(v -> {
+            long id = student.getId();
             Intent intent = new Intent(context, AddStudentActivity.class);
-            intent.putExtra("studentId", student.getId());
+            intent.putExtra("studentId", id);
             context.startActivity(intent);
         });
     }
@@ -82,11 +89,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     static class StudentViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewStudentName, textViewStudentId;
+        TextView textViewStudentName, textViewStudentId, textViewStudentNumber;
         CheckBox checkBoxAttendance;
 
         StudentViewHolder(@NonNull View itemView) {
             super(itemView);
+            textViewStudentNumber = itemView.findViewById(R.id.textViewStudentNumber);
             textViewStudentName = itemView.findViewById(R.id.textViewStudentName);
             textViewStudentId = itemView.findViewById(R.id.textViewStudentId);
             checkBoxAttendance = itemView.findViewById(R.id.checkBoxAttendance);

@@ -1,6 +1,7 @@
 package com.example.attendo;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -13,7 +14,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class AddStudentActivity extends AppCompatActivity {
 
-    private TextInputEditText editTextStudentName;
+    private TextInputEditText editTextStudentName,editTextStudentRollNo;
     private Spinner spinnerBranch, spinnerSemester;
     private MaterialButton btnAddStudent;
     private DatabaseHelper dbHelper;
@@ -26,6 +27,7 @@ public class AddStudentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_student);
 
         editTextStudentName = findViewById(R.id.editTextStudentName);
+        editTextStudentRollNo = findViewById(R.id.editTextStudentRollNo);
         spinnerBranch = findViewById(R.id.spinnerBranch);
         spinnerSemester = findViewById(R.id.spinnerSemester);
         btnAddStudent = findViewById(R.id.btnAddStudent);
@@ -36,6 +38,8 @@ public class AddStudentActivity extends AppCompatActivity {
 
         // Check if we are in update mode
         studentId = getIntent().getLongExtra("studentId", -1);
+        Log.d("DEBUG", "Received Student ID: " + studentId);
+
         if (studentId != -1) {
             isUpdateMode = true;
             loadStudentData(studentId);
@@ -113,6 +117,7 @@ public class AddStudentActivity extends AppCompatActivity {
 
     private void updateStudent() {
         String name = editTextStudentName.getText().toString().trim();
+        String rollNo = editTextStudentRollNo.getText().toString().trim();
         String branch = spinnerBranch.getSelectedItem().toString();
         int semester = Integer.parseInt(spinnerSemester.getSelectedItem().toString());
 

@@ -36,6 +36,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
         ReportItem reportItem = reportItems.get(position);
         holder.textViewReportStudentName.setText(reportItem.getName());
         holder.textViewReportPercentage.setText(String.format(Locale.getDefault(), "Attendance: %.2f%%", reportItem.getPercentage()));
+
+        // Set the serial number
+        holder.textViewReportNumber.setText(String.valueOf(position + 1) + ".");
+
     }
 
     @Override
@@ -45,10 +49,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
 
     static class ReportViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewReportStudentName, textViewReportPercentage;
+        TextView textViewReportStudentName, textViewReportPercentage,textViewReportNumber;
 
         ReportViewHolder(@NonNull View itemView) {
             super(itemView);
+            textViewReportNumber = itemView.findViewById(R.id.textViewReportNumber);
             textViewReportStudentName = itemView.findViewById(R.id.textViewReportStudentName);
             textViewReportPercentage = itemView.findViewById(R.id.textViewReportPercentage);
         }

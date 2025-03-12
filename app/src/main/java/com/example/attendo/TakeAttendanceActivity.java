@@ -149,4 +149,10 @@ public class TakeAttendanceActivity extends AppCompatActivity {
         }
         Toast.makeText(this, "Attendance saved successfully.", Toast.LENGTH_SHORT).show();
     }
+    //Inside TakeAttendanceActivity.java
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadStudents(); // Reload the student list
+    }
 }
