@@ -60,12 +60,12 @@ public class AddStudentActivity extends AppCompatActivity {
 
     private void setupSpinners() {
         ArrayAdapter<CharSequence> branchAdapter = ArrayAdapter.createFromResource(this,
-                R.array.branches_array, android.R.layout.simple_spinner_item);
+                R.array.branch_array, android.R.layout.simple_spinner_item);
         branchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerBranch.setAdapter(branchAdapter);
 
         ArrayAdapter<CharSequence> semesterAdapter = ArrayAdapter.createFromResource(this,
-                R.array.semesters_array, android.R.layout.simple_spinner_item);
+                R.array.semester_array, android.R.layout.simple_spinner_item);
         semesterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSemester.setAdapter(semesterAdapter);
     }

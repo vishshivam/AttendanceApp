@@ -1,13 +1,15 @@
+// ReportAdapter.java
 package com.example.attendo;
 
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.util.Log;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,12 +36,25 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
     @Override
     public void onBindViewHolder(@NonNull ReportViewHolder holder, int position) {
         ReportItem reportItem = reportItems.get(position);
+        Log.d("ReportAdapter", "onBindViewHolder: Item = " + reportItem.getName());
         holder.textViewReportStudentName.setText(reportItem.getName());
-        holder.textViewReportPercentage.setText(String.format(Locale.getDefault(), "Attendance: %.2f%%", reportItem.getPercentage()));
+        holder.textViewReportPercentage.setText(String.format(Locale.getDefault(), "%.0f%%", reportItem.getPercentage()));
+        holder.textViewReportNumber.setText(String.valueOf(position + 1));
+        holder.textViewReportStatus.setText(reportItem.getStatus());
 
-        // Set the serial number
-        holder.textViewReportNumber.setText(String.valueOf(position + 1) + ".");
+        GradientDrawable percentageBackground = (GradientDrawable) holder.textViewReportPercentage.getBackground();
+        float percentage = (float) reportItem.getPercentage();
 
+        if (percentage >= 80) {
+            percentageBackground.setColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.green_darker));
+            holder.textViewReportPercentage.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
+        } else if (percentage >= 60) {
+            percentageBackground.setColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.report_yellow));
+            holder.textViewReportPercentage.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black));
+        } else {
+            percentageBackground.setColor(ContextCompat.getColor(holder.itemView.getContext(), android.R.color.holo_red_light));
+            holder.textViewReportPercentage.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
+        }
     }
 
     @Override
@@ -49,13 +64,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
 
     static class ReportViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewReportStudentName, textViewReportPercentage,textViewReportNumber;
+        TextView textViewReportStudentName, textViewReportPercentage, textViewReportNumber, textViewReportStatus;
 
         ReportViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewReportNumber = itemView.findViewById(R.id.textViewReportNumber);
             textViewReportStudentName = itemView.findViewById(R.id.textViewReportStudentName);
             textViewReportPercentage = itemView.findViewById(R.id.textViewReportPercentage);
+            textViewReportStatus = itemView.findViewById(R.id.textViewReportStatus);
         }
     }
 }

@@ -5,69 +5,81 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#E4E3F6"
+    android:background="@color/green_lighter"
     tools:context=".TakeAttendanceActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:layout_height="?attr/actionBarSize"
+        app:title="Take Attendance" />
 
-        <androidx.cardview.widget.CardView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="2dp">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <Spinner
-                android:id="@+id/spinnerBranch"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp" />
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                android:background="@drawable/soft_card_background">
 
-        </androidx.cardview.widget.CardView>
+                <Spinner
+                    android:id="@+id/spinnerBranch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="2dp">
+            </com.google.android.material.card.MaterialCardView>
 
-            <Spinner
-                android:id="@+id/spinnerSemester"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp" />
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                android:background="@drawable/soft_card_background">
 
-        </androidx.cardview.widget.CardView>
+                <Spinner
+                    android:id="@+id/spinnerSemester"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp" />
 
-    </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-    <Button
-        android:id="@+id/btnDatePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Date"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDatePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Date"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewStudents"
-        android:layout_width="match_parent"
-        tools:listitem="@layout/item_student"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewStudents"
+                android:layout_width="match_parent"
+                tools:listitem="@layout/item_student"
+                android:layout_height="wrap_content" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSaveAttendance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Save Attendance" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveAttendance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Save Attendance" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

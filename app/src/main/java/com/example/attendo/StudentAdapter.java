@@ -52,7 +52,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         holder.checkBoxAttendance.setChecked(student.isPresent());
 
         // Set the serial number
-        holder.textViewStudentNumber.setText(String.valueOf(position + 1) + ". ");
+        holder.textViewStudentNumber.setText(String.valueOf(position + 1));
 
 
         holder.checkBoxAttendance.setOnCheckedChangeListener((buttonView, isChecked) -> {

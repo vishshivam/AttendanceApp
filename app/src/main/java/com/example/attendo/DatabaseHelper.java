@@ -1,4 +1,6 @@
+// DatabaseHelper.java
 package com.example.attendo;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -6,26 +8,22 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "AttendanceDBA";
+    private static final String DATABASE_NAME = "AttendanceDB";
     private static final int DATABASE_VERSION = 1;
 
-    // Table names
     public static final String TABLE_STUDENTS = "students";
     public static final String TABLE_ATTENDANCE = "attendance";
 
-    // Student table columns
     public static final String COLUMN_STUDENT_ID = "student_id";
     public static final String COLUMN_STUDENT_NAME = "name";
     public static final String COLUMN_BRANCH = "branch";
     public static final String COLUMN_SEMESTER = "semester";
 
-    // Attendance table columns
     public static final String COLUMN_ATTENDANCE_ID = "id";
     public static final String COLUMN_ATTENDANCE_STUDENT_ID = "student_id";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_IS_PRESENT = "is_present";
 
-    // SQL create table statements
     private static final String CREATE_TABLE_STUDENTS =
             "CREATE TABLE " + TABLE_STUDENTS + "(" +
                     COLUMN_STUDENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -39,7 +37,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_ATTENDANCE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     COLUMN_ATTENDANCE_STUDENT_ID + " INTEGER," +
                     COLUMN_DATE + " TEXT," +
-                    COLUMN_IS_PRESENT + " INTEGER" +
+                    COLUMN_IS_PRESENT + " INTEGER, " +
+                    "FOREIGN KEY (" + COLUMN_ATTENDANCE_STUDENT_ID + ") REFERENCES " + TABLE_STUDENTS + "(" + COLUMN_STUDENT_ID + ")" +
                     ")";
 
     public DatabaseHelper(Context context) {
@@ -59,7 +58,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Method to add a new student
     public long addStudent(String name, String branch, int semester) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -71,7 +69,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    // Method to remove a student
     public void removeStudent(long studentId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_STUDENTS, COLUMN_STUDENT_ID + " = ?", new String[]{String.valueOf(studentId)});
@@ -79,13 +76,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Method to get all students from a branch and semester
     public Cursor getStudents(String branch, int semester) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_STUDENTS + " WHERE " + COLUMN_BRANCH + " = ? AND " + COLUMN_SEMESTER + " = ?", new String[]{branch, String.valueOf(semester)});
+        if (branch == null && semester == 0) {
+            return db.rawQuery("SELECT * FROM " + TABLE_STUDENTS, null);
+        } else if (branch == null) {
+            return db.rawQuery("SELECT * FROM " + TABLE_STUDENTS + " WHERE " + COLUMN_SEMESTER + " = ?", new String[]{String.valueOf(semester)});
+        } else {
+            return db.rawQuery("SELECT * FROM " + TABLE_STUDENTS + " WHERE " + COLUMN_BRANCH + " = ? AND " + COLUMN_SEMESTER + " = ?", new String[]{branch, String.valueOf(semester)});
+        }
     }
 
-    // Method to add attendance
     public long addAttendance(long studentId, String date, int isPresent) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -97,7 +98,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    // Method to get attendance report
     public Cursor getAttendanceReport(String branch, int semester) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT " + TABLE_STUDENTS + "." + COLUMN_STUDENT_NAME + ", " +
@@ -108,17 +108,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, new String[]{branch, String.valueOf(semester)});
     }
 
-    // Method to get the total number of students
-    public int getStudentCount(){
+    public int getStudentCount() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT count(*) FROM "+ TABLE_STUDENTS, null);
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM " + TABLE_STUDENTS, null);
         cursor.moveToFirst();
         int count = cursor.getInt(0);
         cursor.close();
         return count;
     }
 
-    //Method to update student information
     public int updateStudent(long studentId, String name, String branch, int semester) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -128,8 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.update(TABLE_STUDENTS, values, COLUMN_STUDENT_ID + " = ?", new String[]{String.valueOf(studentId)});
     }
 
-    //method to get one student by id
-    public Cursor getStudent(long studentId){
+    public Cursor getStudent(long studentId) {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_STUDENTS + " WHERE " + COLUMN_STUDENT_ID + " = ?", new String[]{String.valueOf(studentId)});
     }

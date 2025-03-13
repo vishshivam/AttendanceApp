@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="2dp">
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="0dp"
+    android:background="@drawable/soft_card_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,34 +18,56 @@
 
         <TextView
             android:id="@+id/textViewReportNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:text="1."
+            android:background="@drawable/rounded_number_background"
+            android:gravity="center"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            android:layout_marginEnd="8dp"/>
+            android:layout_marginEnd="16dp"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/textViewReportStudentName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Student Name"
                 android:textSize="18sp"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewReportStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Present"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="8dp" />
 
             <TextView
                 android:id="@+id/textViewReportPercentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Attendance: 90%"
-                android:textSize="14sp" />
+                android:text="90%"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:background="@drawable/percentage_background"
+                android:layout_marginStart="8dp"/>
+
         </LinearLayout>
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
