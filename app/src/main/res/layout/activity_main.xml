@@ -116,6 +116,39 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardManageStudent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="8dp"
+                        app:cardElevation="0dp"
+                        android:background="@drawable/soft_card_background">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:src="@drawable/process"
+                                android:contentDescription="Manage Student Icon" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnManageStudent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Manage Student"
+                                app:icon="@null" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardViewReport"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -179,37 +212,6 @@
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardManageStudent"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="8dp"
-                        app:cardElevation="0dp"
-                        android:background="@drawable/soft_card_background">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:layout_width="64dp"
-                                android:layout_height="64dp"
-                                android:src="@drawable/attendance"
-                                android:contentDescription="Manage Student Icon" />
-
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/btnManageStudent"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:text="Manage Students"
-                                app:icon="@null" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
 
                 </GridLayout>
 
