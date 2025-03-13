@@ -3,10 +3,13 @@ package com.example.attendo;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,11 @@ public class ManageStudentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_students);
 
+        MaterialToolbar toolbar = findViewById(R.id.topAppBarDetail);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         recyclerViewManageStudents = findViewById(R.id.recyclerViewManageStudents);
         dbHelper = new DatabaseHelper(this);
         students = new ArrayList<>();
@@ -38,6 +46,14 @@ public class ManageStudentsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         loadStudents();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void loadStudents() {

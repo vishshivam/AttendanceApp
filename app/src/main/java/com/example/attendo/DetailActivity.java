@@ -4,11 +4,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +24,18 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+
+        MaterialToolbar toolbar = findViewById(R.id.topAppBarDetail);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         dbHelper = new DatabaseHelper(this);
         RecyclerView recyclerViewAttendanceDetails = findViewById(R.id.recyclerViewAttendanceDetails);
         recyclerViewAttendanceDetails.setLayoutManager(new LinearLayoutManager(this));
+
+
 
         int studentId = getIntent().getIntExtra("studentId", -1);
         Log.d("DetailActivity", "Fetching attendance details for studentId: " + studentId);
@@ -35,6 +47,14 @@ public class DetailActivity extends AppCompatActivity {
             AttendanceDetailAdapter adapter = new AttendanceDetailAdapter(this, attendanceDetails);
             recyclerViewAttendanceDetails.setAdapter(adapter);
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // Implement this method to fetch attendance details from database

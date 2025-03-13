@@ -9,10 +9,14 @@
     tools:context=".ManageStudentsActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBarManageStudents"
+        android:id="@+id/topAppBarDetail"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:title="Manage Students" />
+        app:title="Add/Delete Student"
+        app:titleTextColor="@color/black"
+        app:navigationIcon="@drawable/baseline_arrow_back_24"
+        app:navigationIconTint="@color/black"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewManageStudents"
