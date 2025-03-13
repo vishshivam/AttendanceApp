@@ -5,6 +5,13 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <style name="AlertDialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/black</item> </style>
+
+    <style name="CustomAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/AlertDialogButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AlertDialogButtonStyle</item>
+    </style>
 
     <style name="Theme.Attendo" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/green_light</item>
@@ -21,5 +28,9 @@
     <style name="DarkerGreenButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/green_darker</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="DetailButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="backgroundTint">@color/your_desired_color</item>
+        <item name="android:textColor">@color/white</item> <item name="android:textSize">12sp</item>
     </style>
 </resources>

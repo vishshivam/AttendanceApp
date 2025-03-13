@@ -30,6 +30,11 @@
         <activity
             android:name=".TakeAttendanceActivity"
             android:exported="false" />
+        <activity
+            android:name=".ManageStudentsActivity"
+            android:exported="false" />
+        <activity android:name=".DetailActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

@@ -22,6 +22,14 @@
     <color name="green_darker">#66BB6A</color>
     <color name="green_accent">#A5D6A7</color>
     <color name="report_yellow">#FFEB3B</color>
-
-
+    <color name="update_button_color">#4CAF50</color>
+    <color name="delete_button_color">#F44336</color>
+    <color name="red">#F44336</color>
+        <color name="your_desired_color">#FF9800</color>
 </resources>
+
+
+
+
+
+

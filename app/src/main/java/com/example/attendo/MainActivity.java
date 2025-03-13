@@ -2,6 +2,7 @@ package com.example.attendo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private MaterialButton btnTakeAttendance;
     private MaterialButton btnViewReport;
     private MaterialButton btnAddStudent;
+    private MaterialButton btnManageStudent;
+
     private TextView studentCountTextView;
     private DatabaseHelper dbHelper;
     @Override
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         btnTakeAttendance = findViewById(R.id.btnTakeAttendance);
         btnViewReport = findViewById(R.id.btnViewReport);
         btnAddStudent = findViewById(R.id.btnAddStudent);
+        btnManageStudent = findViewById(R.id.btnManageStudent);
         studentCountTextView = findViewById(R.id.studentCountTextView);
         dbHelper = new DatabaseHelper(this);
 
@@ -56,6 +60,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddStudentActivity.class);
                 startActivity(intent);
+            }
+        });
+        btnManageStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ManageStudentsActivity.class);
+                startActivity(intent);
+
             }
         });
 

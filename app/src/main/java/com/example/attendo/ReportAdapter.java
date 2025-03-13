@@ -1,6 +1,7 @@
-// ReportAdapter.java
-package com.example.attendo;
+package com.example.attendo;// ReportAdapter.java
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,18 +10,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
+
+import com.google.android.material.button.MaterialButton;
 import java.util.List;
 import java.util.Locale;
 
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportViewHolder> {
 
+    private Context context;
     private List<ReportItem> reportItems;
 
-    public ReportAdapter(List<ReportItem> reportItems) {
+    public ReportAdapter(Context context, List<ReportItem> reportItems) {
+        this.context = context;
         this.reportItems = reportItems;
     }
-
+    // New method to update the data
     public void setReportItems(List<ReportItem> reportItems) {
         this.reportItems = reportItems;
         notifyDataSetChanged();
@@ -29,28 +33,16 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
     @NonNull
     @Override
     public ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_report, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_report, parent, false);
         return new ReportViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ReportViewHolder holder, int position) {
         ReportItem reportItem = reportItems.get(position);
-        Log.d("ReportAdapter", "onBindViewHolder: Item = " + reportItem.getName());
         holder.textViewReportStudentName.setText(reportItem.getName());
         holder.textViewReportPercentage.setText(String.format(Locale.getDefault(), "%.0f%%", reportItem.getPercentage()));
         holder.textViewReportNumber.setText(String.valueOf(position + 1));
-        holder.textViewReportStatus.setText(reportItem.getStatus());
-
-        String status = reportItem.getStatus();
-        if (status.equals("Present")) {
-            holder.textViewReportStatus.setText("P");
-            holder.textViewReportStatus.setBackgroundResource(R.drawable.status_background);
-        } else {
-            holder.textViewReportStatus.setText("A");
-            holder.textViewReportStatus.setBackgroundResource(R.drawable.status_background_absent);
-        }
-
         GradientDrawable percentageBackground = (GradientDrawable) holder.textViewReportPercentage.getBackground();
         float percentage = (float) reportItem.getPercentage();
 
@@ -64,6 +56,15 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
             percentageBackground.setColor(ContextCompat.getColor(holder.itemView.getContext(), android.R.color.holo_red_light));
             holder.textViewReportPercentage.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
         }
+
+        holder.buttonDetail.setOnClickListener(v -> {
+            int studentId = (int) reportItem.getStudentId();
+
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("studentId", studentId);
+
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -71,16 +72,16 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
         return reportItems.size();
     }
 
-    static class ReportViewHolder extends RecyclerView.ViewHolder {
+    public static class ReportViewHolder extends RecyclerView.ViewHolder {
+        TextView textViewReportNumber, textViewReportStudentName, textViewReportStatus, textViewReportPercentage;
+        MaterialButton buttonDetail;
 
-        TextView textViewReportStudentName, textViewReportPercentage, textViewReportNumber, textViewReportStatus;
-
-        ReportViewHolder(@NonNull View itemView) {
+        public ReportViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewReportNumber = itemView.findViewById(R.id.textViewReportNumber);
             textViewReportStudentName = itemView.findViewById(R.id.textViewReportStudentName);
             textViewReportPercentage = itemView.findViewById(R.id.textViewReportPercentage);
-            textViewReportStatus = itemView.findViewById(R.id.textViewReportStatus);
+            buttonDetail = itemView.findViewById(R.id.buttonDetail);
         }
     }
 }

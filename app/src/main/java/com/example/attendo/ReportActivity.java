@@ -35,8 +35,6 @@ public class ReportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-        Log.d("ReportActivity", "onCreate: ReportActivity started");
-
         dbHelper = new DatabaseHelper(this);
         recyclerViewReport = findViewById(R.id.recyclerViewReport);
         spinnerBranch = findViewById(R.id.spinnerBranch);
@@ -80,17 +78,12 @@ public class ReportActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
         recyclerViewReport.setLayoutManager(new LinearLayoutManager(this));
-        reportAdapter = new ReportAdapter(new ArrayList<>());
+        reportAdapter = new ReportAdapter(this,new ArrayList<>());
         recyclerViewReport.setAdapter(reportAdapter);
     }
 
     private void loadAllReports() {
         allReportItems = getAllReportData();
-        if (allReportItems != null) {
-            Log.d("ReportActivity", "allReportItems size: " + allReportItems.size());
-        } else {
-            Log.e("ReportActivity", "allReportItems is null after loadAllReports()");
-        }
     }
 
     private List<ReportItem> getAllReportData() {
@@ -110,9 +103,7 @@ public class ReportActivity extends AppCompatActivity {
             } while (cursor.moveToNext());
             cursor.close();
         }
-        Log.d("ReportActivity", "getAllReportData: reportItems size = " + reportItems.size());
         for (ReportItem item : reportItems) {
-            Log.d("ReportActivity", "getAllReportData: Item = " + item.getName() + ", " + item.getPercentage() + ", " + item.getBranch() + ", " + item.getSemester() + ", " + item.getStudentId());
         }
         return reportItems;
     }
@@ -147,10 +138,6 @@ public class ReportActivity extends AppCompatActivity {
         int semester = Integer.parseInt(semesterString);
         String date = dateFormat.format(selectedDate.getTime());
 
-        Log.d("ReportActivity", "Selected Branch: " + branch);
-        Log.d("ReportActivity", "Selected Semester: " + semester);
-        Log.d("ReportActivity", "Selected Date: " + date);
-
         List<ReportItem> filteredList = new ArrayList<>();
         if (allReportItems != null) {
             for (ReportItem item : allReportItems) {
@@ -162,21 +149,13 @@ public class ReportActivity extends AppCompatActivity {
                 }
             }
         } else {
-            Log.e("ReportActivity", "allReportItems is null in filterReports()");
         }
-
-        Log.d("ReportActivity", "filterReports: filteredList size = " + filteredList.size());
         for (ReportItem item : filteredList) {
-            Log.d("ReportActivity", "filterReports: Item = " + item.getName() + ", " + item.getStatus() + ", " + item.getPercentage() + ", " + item.getBranch() + ", " + item.getSemester() + ", " + item.getStudentId());
         }
-
         reportAdapter.setReportItems(filteredList);
-        Log.d("ReportActivity", "filterReports: reportAdapter item count = " + reportAdapter.getItemCount());
     }
 
     private String getAttendanceStatus(long studentId, String date) {
-        Log.d("AttendanceStatus", "studentId: " + studentId + ", date: " + date);
-
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String query = "SELECT " + DatabaseHelper.COLUMN_IS_PRESENT + " FROM " + DatabaseHelper.TABLE_ATTENDANCE + " WHERE " + DatabaseHelper.COLUMN_ATTENDANCE_STUDENT_ID + " = ? AND " + DatabaseHelper.COLUMN_DATE + " = ?";
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(studentId), date});

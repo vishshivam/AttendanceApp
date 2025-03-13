@@ -3,6 +3,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,8 +48,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     @Override
     public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
         Student student = students.get(position);
-        holder.textViewStudentName.setText(student.getName());
-        holder.textViewStudentId.setText("Student Id: "+String.valueOf(student.getId()));
+        String studentName = student.getName();
+        if (!TextUtils.isEmpty(studentName)) { // Check if the name is not empty
+            studentName = studentName.toUpperCase();
+        }
+        holder.textViewStudentName.setText(studentName);
+        holder.textViewStudentId.setText("R188237200"+String.valueOf(student.getId()));
         holder.checkBoxAttendance.setChecked(student.isPresent());
 
         // Set the serial number
@@ -57,28 +62,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
         holder.checkBoxAttendance.setOnCheckedChangeListener((buttonView, isChecked) -> {
             student.setPresent(isChecked);
-        });
-
-        holder.itemView.setOnLongClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("Are you sure you want to delete " + student.getName() + "?");
-            builder.setPositiveButton("Yes", (dialog, which) -> {
-                dbHelper.removeStudent(student.getId());
-                students.remove(position);
-                notifyItemRemoved(position);
-                notifyDataSetChanged();
-                Toast.makeText(context, "Student deleted.", Toast.LENGTH_SHORT).show();
-            });
-            builder.setNegativeButton("No", null);
-            builder.show();
-            return true;
-        });
-
-        holder.itemView.setOnClickListener(v -> {
-            long id = student.getId();
-            Intent intent = new Intent(context, AddStudentActivity.class);
-            intent.putExtra("studentId", id);
-            context.startActivity(intent);
         });
     }
 

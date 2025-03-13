@@ -100,7 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAttendanceReport(String branch, int semester) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT " + TABLE_STUDENTS + "." + COLUMN_STUDENT_NAME + ", " +
+        String query = "SELECT " + TABLE_STUDENTS + "." + COLUMN_STUDENT_ID + ", " + TABLE_STUDENTS + "." + COLUMN_STUDENT_NAME + ", " +
                 "SUM(CASE WHEN " + TABLE_ATTENDANCE + "." + COLUMN_IS_PRESENT + " = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(" + TABLE_ATTENDANCE + "." + COLUMN_IS_PRESENT + ") AS attendancePercentage " +
                 "FROM " + TABLE_STUDENTS + " LEFT JOIN " + TABLE_ATTENDANCE + " ON " + TABLE_STUDENTS + "." + COLUMN_STUDENT_ID + " = " + TABLE_ATTENDANCE + "." + COLUMN_ATTENDANCE_STUDENT_ID + " " +
                 "WHERE " + TABLE_STUDENTS + "." + COLUMN_BRANCH + " = ? AND " + TABLE_STUDENTS + "." + COLUMN_SEMESTER + " = ? " +

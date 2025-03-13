@@ -1,5 +1,6 @@
 package com.example.attendo;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -50,11 +51,17 @@ public class TakeAttendanceActivity extends AppCompatActivity {
         setupDatePicker();
         setupRecyclerView();
 
-        btnSaveAttendance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveAttendance();
-            }
+        btnSaveAttendance.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(TakeAttendanceActivity.this, R.style.CustomAlertDialogTheme);
+            builder.setTitle("Confirm Save");
+            builder.setMessage("Are you sure you want to save the attendance?");
+            builder.setPositiveButton("Yes", (dialog, which) -> {
+                // Proceed with saving attendance here
+                saveAttendance(); // Call your saveAttendance method
+            });
+            builder.setNegativeButton("No", null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
     }
 
