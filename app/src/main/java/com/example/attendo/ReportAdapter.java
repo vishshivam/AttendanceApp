@@ -42,6 +42,15 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
         holder.textViewReportNumber.setText(String.valueOf(position + 1));
         holder.textViewReportStatus.setText(reportItem.getStatus());
 
+        String status = reportItem.getStatus();
+        if (status.equals("Present")) {
+            holder.textViewReportStatus.setText("P");
+            holder.textViewReportStatus.setBackgroundResource(R.drawable.status_background);
+        } else {
+            holder.textViewReportStatus.setText("A");
+            holder.textViewReportStatus.setBackgroundResource(R.drawable.status_background_absent);
+        }
+
         GradientDrawable percentageBackground = (GradientDrawable) holder.textViewReportPercentage.getBackground();
         float percentage = (float) reportItem.getPercentage();
 
