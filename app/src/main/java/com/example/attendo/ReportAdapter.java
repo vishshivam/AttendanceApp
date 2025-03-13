@@ -3,6 +3,7 @@ package com.example.attendo;// ReportAdapter.java
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
     @Override
     public void onBindViewHolder(@NonNull ReportViewHolder holder, int position) {
         ReportItem reportItem = reportItems.get(position);
-        holder.textViewReportStudentName.setText(reportItem.getName());
+        String studentName = reportItem.getName();
+        if (!TextUtils.isEmpty(studentName)) { // Check if the name is not empty
+            studentName = studentName.toUpperCase();
+        }
+        holder.textViewReportStudentName.setText(studentName);
         holder.textViewReportPercentage.setText(String.format(Locale.getDefault(), "%.0f%%", reportItem.getPercentage()));
         holder.textViewReportNumber.setText(String.valueOf(position + 1));
         GradientDrawable percentageBackground = (GradientDrawable) holder.textViewReportPercentage.getBackground();
