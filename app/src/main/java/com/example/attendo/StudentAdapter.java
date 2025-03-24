@@ -69,6 +69,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     public int getItemCount() {
         return students.size();
     }
+    public void markAllPresent(boolean present) {
+        for (Student student : students) {
+            student.setPresent(present);
+        }
+        notifyDataSetChanged();
+    }
 
     static class StudentViewHolder extends RecyclerView.ViewHolder {
 

@@ -1,4 +1,5 @@
 // DatabaseHelper.java
+
 package com.example.attendo;
 
 import android.content.ContentValues;
@@ -6,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "AttendanceDB";
@@ -23,6 +25,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ATTENDANCE_STUDENT_ID = "student_id";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_IS_PRESENT = "is_present";
+    public static final String COLUMN_ATTENDANCE_BRANCH = "branch";
+    public static final String COLUMN_ATTENDANCE_SEMESTER = "semester";
 
     private static final String CREATE_TABLE_STUDENTS =
             "CREATE TABLE " + TABLE_STUDENTS + "(" +
@@ -38,9 +42,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_ATTENDANCE_STUDENT_ID + " INTEGER," +
                     COLUMN_DATE + " TEXT," +
                     COLUMN_IS_PRESENT + " INTEGER, " +
+                    COLUMN_ATTENDANCE_BRANCH + " TEXT, " +
+                    COLUMN_ATTENDANCE_SEMESTER + " INTEGER, " +
                     "FOREIGN KEY (" + COLUMN_ATTENDANCE_STUDENT_ID + ") REFERENCES " + TABLE_STUDENTS + "(" + COLUMN_STUDENT_ID + ")" +
                     ")";
-
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -87,15 +92,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public long addAttendance(long studentId, String date, int isPresent) {
+    public long addAttendance(long studentId, String date, int isPresent, String branch, int semester) {
+        if (isAttendanceDuplicate(studentId, date)) { // Modified duplicate check
+            return -1; // Indicate duplicate record
+        }
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_ATTENDANCE_STUDENT_ID, studentId);
         values.put(COLUMN_DATE, date);
         values.put(COLUMN_IS_PRESENT, isPresent);
+        values.put(COLUMN_ATTENDANCE_BRANCH, branch);
+        values.put(COLUMN_ATTENDANCE_SEMESTER, semester);
         long id = db.insert(TABLE_ATTENDANCE, null, values);
         db.close();
         return id;
+    }
+    public boolean isAttendanceDuplicate(long studentId, String date) {
+        Log.d("DatabaseHelper", "isAttendanceDuplicate: date = " + date);
+        if (date == null) {
+            return false;
+        }
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_ATTENDANCE_ID};
+        String selection = COLUMN_ATTENDANCE_STUDENT_ID + " = ? AND " + COLUMN_DATE + " = ?";
+        String[] selectionArgs = {String.valueOf(studentId), date}; // Ensure 'date' format is "EEEE, MMMM dd, CAPACITY"
+        Cursor cursor = db.query(TABLE_ATTENDANCE, columns, selection, selectionArgs, null, null, null);
+        boolean duplicate = cursor.getCount() > 0;
+        cursor.close();
+        db.close();
+        return duplicate;
     }
 
     public Cursor getAttendanceReport(String branch, int semester) {
