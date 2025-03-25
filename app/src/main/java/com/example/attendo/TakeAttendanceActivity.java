@@ -3,18 +3,15 @@
 package com.example.attendo;
 
 import android.app.AlertDialog;
+
 import android.app.DatePickerDialog;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,14 +32,15 @@ import java.util.Locale;
 public class TakeAttendanceActivity extends AppCompatActivity {
 
     private Spinner spinnerBranch, spinnerSemester;
-    private Button btnSaveAttendance, btnBulkAttendance;
+    private Button btnSaveAttendance, btnBulkAttendance, btnSelectDate; //Add btnSelectDate;
     private RecyclerView recyclerViewStudents;
     private StudentAdapter studentAdapter;
     private DatabaseHelper dbHelper;
     private Calendar calendar;
     private BulkStudentAdapter bulkStudentAdapter;
     private boolean allPresent = false; // Add this variable
-    private TextView textViewDate;
+   // private TextView textViewDate;
+    private String selectedDate; //add selectedDate
 
 
     @Override
@@ -57,17 +55,21 @@ public class TakeAttendanceActivity extends AppCompatActivity {
 
         spinnerBranch = findViewById(R.id.spinnerBranch);
         spinnerSemester = findViewById(R.id.spinnerSemester);
-        textViewDate = findViewById(R.id.textViewDate);
+       // textViewDate = findViewById(R.id.textViewDate);
         btnSaveAttendance = findViewById(R.id.btnSaveAttendance);
         btnBulkAttendance = findViewById(R.id.btnBulkAttendance);
         recyclerViewStudents = findViewById(R.id.recyclerViewStudents);
+
+        btnSelectDate = findViewById(R.id.btnSelectDate); //Initialize btnSelectDate
+
 
         dbHelper = new DatabaseHelper(this);
         calendar = Calendar.getInstance();
 
         setupSpinners();
         setupRecyclerView();
-        displayCurrentDate(); // Call the method to display current date.
+        //displayCurrentDate(); // Call the method to display current date.
+        setupDatePicker(); // call setupDatePicker
 
 
 
@@ -138,15 +140,34 @@ public class TakeAttendanceActivity extends AppCompatActivity {
             }
         });
     }
+    private void setupDatePicker() {
+        btnSelectDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(TakeAttendanceActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                calendar.set(Calendar.YEAR, year);
+                                calendar.set(Calendar.MONTH, month);
+                                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                selectedDate = new SimpleDateFormat("EEEE, MMMM dd, yyyy", Locale.getDefault()).format(calendar.getTime());
+                                btnSelectDate.setText(selectedDate);
+                            }
+                        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
+            }
+        });
+    }
 
-    private void displayCurrentDate() {
+   /* private void displayCurrentDate() {
         calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM dd, yyyy", Locale.getDefault());
         String formattedDate = dateFormat.format(calendar.getTime());
 
         textViewDate.setText(formattedDate);
     }
-
+*/
     private void setupRecyclerView() {
         recyclerViewStudents.setLayoutManager(new LinearLayoutManager(this));
         studentAdapter = new StudentAdapter(new ArrayList<>(), this, dbHelper);
@@ -179,18 +200,23 @@ public class TakeAttendanceActivity extends AppCompatActivity {
         String branch = spinnerBranch.getSelectedItem().toString();
         int semester = Integer.parseInt(spinnerSemester.getSelectedItem().toString());
 
+        if (selectedDate == null || selectedDate.isEmpty()) {
+            Toast.makeText(this, "Please select a date.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         for (Student student : students) {
             int isPresent = student.isPresent() ? 1 : 0;
-            String dateFromTextView = textViewDate.getText().toString(); //Get date from textview.
+            //String dateFromTextView = textViewDate.getText().toString(); //Get date from textview.
 
-            if (dateFromTextView != null && !dateFromTextView.isEmpty()) { // Null check
-                long result = dbHelper.addAttendance(student.getId(), dateFromTextView, isPresent, branch, semester);
+            //if (dateFromTextView != null && !dateFromTextView.isEmpty()) { // Null check
+                long result = dbHelper.addAttendance(student.getId(), selectedDate, isPresent, branch, semester);
                 if (result == -1) {
                     Toast.makeText(this, "Duplicate attendance record found for: " + student.getName(), Toast.LENGTH_SHORT).show();
                 }
-            }else{
-                Toast.makeText(this, "Date is not selected", Toast.LENGTH_SHORT).show();
-            }
+           // }else{
+               // Toast.makeText(this, "Date is not selected", Toast.LENGTH_SHORT).show();
+          //  }
         }
         Toast.makeText(this, "Attendance saved successfully.", Toast.LENGTH_SHORT).show();
     }

@@ -80,8 +80,17 @@
                         android:layout_height="30dp"
                         android:src="@drawable/attendance"
                         android:layout_marginEnd="8dp" />
+                    <Button
+                        android:id="@+id/btnSelectDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Select Date"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black" />
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/textViewDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -90,7 +99,7 @@
                         android:textStyle="bold"
                         android:text="Today's Date"
                         android:textColor="@color/green_darker" />
-
+-->
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
