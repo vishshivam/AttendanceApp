@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,7 +38,6 @@ public class TakeAttendanceActivity extends AppCompatActivity {
     private StudentAdapter studentAdapter;
     private DatabaseHelper dbHelper;
     private Calendar calendar;
-    private BulkStudentAdapter bulkStudentAdapter;
     private boolean allPresent = false; // Add this variable
    // private TextView textViewDate;
     private String selectedDate; //add selectedDate
@@ -177,7 +177,11 @@ public class TakeAttendanceActivity extends AppCompatActivity {
     private void loadStudents() {
         String branch = spinnerBranch.getSelectedItem().toString();
         int semester = Integer.parseInt(spinnerSemester.getSelectedItem().toString());
+        Log.d("TakeAttendanceActivity", "loadStudents: branch = " + branch + ", semester = " + semester);
+
         Cursor cursor = dbHelper.getStudents(branch, semester);
+        Log.d("TakeAttendanceActivity", "loadStudents: cursor count = " + cursor.getCount());
+
         List<Student> students = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {

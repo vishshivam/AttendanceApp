@@ -112,6 +112,7 @@ public class AddStudentActivity extends AppCompatActivity {
 
     private void addStudent() {
         String name = editTextStudentName.getText().toString().trim();
+        String rollno = editTextStudentRollNo.getText().toString().trim();
         String branch = spinnerBranch.getSelectedItem().toString();
         int semester = Integer.parseInt(spinnerSemester.getSelectedItem().toString());
 
@@ -120,7 +121,7 @@ public class AddStudentActivity extends AppCompatActivity {
             return;
         }
 
-        long id = dbHelper.addStudent(name, branch, semester);
+        long id = dbHelper.addStudent(name, rollno,branch, semester);
 
         if (id != -1) {
             Toast.makeText(this, "Student added successfully.", Toast.LENGTH_SHORT).show();
@@ -132,7 +133,7 @@ public class AddStudentActivity extends AppCompatActivity {
 
     private void updateStudent() {
         String name = editTextStudentName.getText().toString().trim();
-        String rollNo = editTextStudentRollNo.getText().toString().trim();
+        String rollno = editTextStudentRollNo.getText().toString().trim();
         String branch = spinnerBranch.getSelectedItem().toString();
         int semester = Integer.parseInt(spinnerSemester.getSelectedItem().toString());
 
@@ -141,7 +142,7 @@ public class AddStudentActivity extends AppCompatActivity {
             return;
         }
 
-        int rowsAffected = dbHelper.updateStudent(studentId, name, branch, semester);
+        int rowsAffected = dbHelper.updateStudent(studentId, name, rollno,branch, semester);
 
         if (rowsAffected > 0) {
             Toast.makeText(this, "Student updated successfully.", Toast.LENGTH_SHORT).show();
