@@ -65,6 +65,7 @@ public class TakeAttendanceActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
         calendar = Calendar.getInstance();
+        //populateDummyData(); // Add this line
 
         setupSpinners();
         setupRecyclerView();
@@ -85,6 +86,8 @@ public class TakeAttendanceActivity extends AppCompatActivity {
 
         btnBulkAttendance.setOnClickListener(v -> markAllPresent());
     }
+
+
     private void markAllPresent() {
         allPresent = !allPresent; // Toggle the state
         studentAdapter.markAllPresent(allPresent);

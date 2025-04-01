@@ -26,7 +26,13 @@
     <color name="delete_button_color">#F44336</color>
     <color name="red">#F44336</color>
         <color name="your_desired_color">#FF9800</color>
+
+
+        <color name="primaryTextColor">#212121</color>
+       <color name="secondaryTextColor">#757575</color>
+    <color name="dividerColor">#C9C6C6</color>
 </resources>
+
 
 
 

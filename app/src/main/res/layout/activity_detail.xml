@@ -52,6 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Name: "
+                        android:textStyle="bold"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                     <TextView
@@ -59,6 +60,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Roll No: "
+                        android:textStyle="bold"
+
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                     <TextView
@@ -66,6 +69,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Branch: "
+                        android:textStyle="bold"
+
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                     <TextView
@@ -73,6 +78,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Semester: "
+                        android:textStyle="bold"
+
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                 </LinearLayout>
@@ -107,6 +114,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Present: "
+                        android:textStyle="bold"
+
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                     <TextView
@@ -114,6 +123,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Absent: "
+                        android:textStyle="bold"
+
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                     <TextView
@@ -121,6 +132,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Total Days: "
+                        android:textStyle="bold"
+
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                     <TextView
@@ -128,6 +141,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Percentage: "
+                        android:textStyle="bold"
+
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                 </LinearLayout>

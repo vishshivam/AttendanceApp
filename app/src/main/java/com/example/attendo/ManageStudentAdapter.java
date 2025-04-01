@@ -46,8 +46,9 @@ public class ManageStudentAdapter extends RecyclerView.Adapter<ManageStudentAdap
         }
         holder.textViewManageNumber.setText(String.valueOf(position + 1));
         holder.textViewStudentName.setText(studentName);
-        holder.textViewStudentBranch.setText(student.getBranch());
-        holder.textViewStudentSemester.setText(String.valueOf(student.getSemester()));
+        holder.textViewStudentBranch.setText("Branch : "+student.getBranch());
+        holder.textViewStudentSemester.setText("Semester : "+(student.getSemester()));
+        holder.textViewStudentRollNo.setText("Roll No : "+(student.getRollno()));
 
         holder.buttonUpdate.setOnClickListener(v -> updateStudent(student));
         holder.buttonDelete.setOnClickListener(v -> deleteStudent(student));
@@ -81,7 +82,7 @@ public class ManageStudentAdapter extends RecyclerView.Adapter<ManageStudentAdap
     }
 
     static class ManageStudentViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewManageNumber, textViewStudentName, textViewStudentBranch, textViewStudentSemester;
+        TextView textViewManageNumber, textViewStudentName, textViewStudentBranch, textViewStudentSemester,textViewStudentRollNo;
         MaterialButton buttonUpdate, buttonDelete;
 
         ManageStudentViewHolder(@NonNull View itemView) {
@@ -90,6 +91,7 @@ public class ManageStudentAdapter extends RecyclerView.Adapter<ManageStudentAdap
             textViewStudentName = itemView.findViewById(R.id.textViewStudentName);
             textViewStudentBranch = itemView.findViewById(R.id.textViewStudentBranch);
             textViewStudentSemester = itemView.findViewById(R.id.textViewStudentSemester);
+            textViewStudentRollNo = itemView.findViewById(R.id.textViewStudentRollNo);
             buttonUpdate = itemView.findViewById(R.id.buttonUpdate);
             buttonDelete = itemView.findViewById(R.id.buttonDelete);
         }

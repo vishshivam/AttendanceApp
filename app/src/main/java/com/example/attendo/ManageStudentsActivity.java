@@ -63,9 +63,10 @@ public class ManageStudentsActivity extends AppCompatActivity {
             do {
                 long id = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_STUDENT_ID));
                 String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_STUDENT_NAME));
+                String rollno = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_STUDENT_ROLL_NO));
                 String branch = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BRANCH));
                 int semester = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_SEMESTER));
-                students.add(new ManageStudent(id, name, branch, semester));
+                students.add(new ManageStudent(id,name,rollno,branch,semester));
             } while (cursor.moveToNext());
             cursor.close();
         }

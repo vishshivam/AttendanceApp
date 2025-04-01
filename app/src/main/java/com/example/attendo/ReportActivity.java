@@ -48,7 +48,6 @@ public class ReportActivity extends AppCompatActivity {
 
         selectedDate = Calendar.getInstance();
         dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-
         buttonDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

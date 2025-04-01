@@ -6,10 +6,12 @@ public class ManageStudent {
     private String name;
     private String branch;
     private int semester;
+    private String rollno;
 
-    public ManageStudent(long id, String name, String branch, int semester) {
+    public ManageStudent(long id, String name,String rollno,String branch, int semester) {
         this.id = id;
         this.name = name;
+        this.rollno = rollno;
         this.branch = branch;
         this.semester = semester;
     }
@@ -29,4 +31,6 @@ public class ManageStudent {
     public int getSemester() {
         return semester;
     }
+
+    public String getRollno() {  return rollno; }
 }
