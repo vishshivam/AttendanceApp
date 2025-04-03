@@ -228,10 +228,4 @@ public class TakeAttendanceActivity extends AppCompatActivity {
         Toast.makeText(this, "Attendance saved successfully.", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    protected void onResume () {
-        super.onResume();
-        loadStudents();
-    }
-
 }
