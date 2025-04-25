@@ -1,32 +1,30 @@
 package com.example.attendo;
-import android.app.AlertDialog;
+
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.attendo.AttendanceViewModel;
 
 import java.util.List;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> {
 
     private List<Student> students;
-    private DatabaseHelper dbHelper;
+    private AttendanceViewModel viewModel; // Receive the ViewModel
     private Context context;
 
-    public StudentAdapter(List<Student> students, Context context, DatabaseHelper dbHelper) {
+    public StudentAdapter(List<Student> students, Context context, AttendanceViewModel viewModel) {
         this.students = students;
         this.context = context;
-        this.dbHelper = dbHelper;
+        this.viewModel = viewModel;
     }
 
     public void setStudents(List<Student> students) {
@@ -49,32 +47,23 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
         Student student = students.get(position);
         String studentName = student.getName();
-        if (!TextUtils.isEmpty(studentName)) { // Check if the name is not empty
+        if (!TextUtils.isEmpty(studentName)) {
             studentName = studentName.toUpperCase();
         }
         holder.textViewStudentName.setText(studentName);
-        holder.textViewStudentId.setText("R188237200"+String.valueOf(student.getId()));
-
-
-        // Set the serial number
+        holder.textViewStudentId.setText("R188237200" + String.valueOf(student.getId()));
         holder.textViewStudentNumber.setText(String.valueOf(position + 1));
 
         holder.checkBoxAttendance.setOnCheckedChangeListener(null);
         holder.checkBoxAttendance.setChecked(student.isPresent());
         holder.checkBoxAttendance.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            student.setPresent(isChecked);
+            viewModel.updateStudentAttendance(position, isChecked); // Update via ViewModel
         });
     }
 
     @Override
     public int getItemCount() {
         return students.size();
-    }
-    public void markAllPresent(boolean present) {
-        for (Student student : students) {
-            student.setPresent(present);
-        }
-        notifyDataSetChanged();
     }
 
     static class StudentViewHolder extends RecyclerView.ViewHolder {

@@ -10,6 +10,11 @@ public class Student {
         this.name = name;
         this.isPresent = false;
     }
+    public Student(int id, String name, boolean isPresent) {
+        this.id = id;
+        this.name = name;
+        this.isPresent = isPresent;
+    }
 
     public int getId() {
         return id;
@@ -24,6 +29,6 @@ public class Student {
     }
 
     public void setPresent(boolean present) {
-        isPresent = present;
+        this.isPresent = present;
     }
 }
